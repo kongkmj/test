@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
  <html>
    <head>
+     <meta charset="utf-8">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <style>
 	body {
@@ -36,14 +37,14 @@
 	// canvas request for all browsers
 	window.requestAnimFrame = (function(callback) {
         return window.requestAnimationFrame ||
-        //window.webkitRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
-
-        setInterval(callback, 1000); // 30 frames per second
-
-	})();
+        function(callback) {
+        window.setTimeout(callback, 1000/30); // 30 frames per second
+	  };
+    })();
 
 	var iosocket;
 	var pollOneH = 0;
@@ -72,7 +73,7 @@
 		potValue = pollOneH*2;
 	  }
 
-	  content.fillText('Potmeter value: ' + potValue, text.x, text.y);
+	  content.fillText('저항: ' + potValue, text.x, text.y);
 
           // render graph
 	  content.fillStyle = 'yellow';
